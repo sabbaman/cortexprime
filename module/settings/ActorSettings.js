@@ -29,6 +29,22 @@ export default class ActorSettings extends FormApplication {
 
     return {
       actorTypes: game.settings.get('cortexprime', 'actorTypes'),
+      traitPresets: {
+        "0": {
+          label: "Skills",
+          description: "skill trait set description",
+          definition: {
+            
+          }
+        },
+        "1": {
+          label: "Skills 2",
+          description: "skill trait set description",
+          definition: {
+            
+          }
+        },
+      },
       breadcrumbs,
       goBack: breadcrumbs[getLength(breadcrumbs ?? {}) - 2]?.target ?? 0
     }

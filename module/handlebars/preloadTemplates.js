@@ -46,6 +46,7 @@ export const preloadHandlebarsTemplates = async function () {
     'settings/theme/traits',
     'settings/trait',
     'settings/trait-set',
+    'settings/trait-presets',
     'settings/simple-trait',
     'settings/value-types/descriptors',
     'settings/value-types/dice',

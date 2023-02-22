@@ -31,6 +31,11 @@ export const registerHandlebarHelpers = () => {
 
     return length > -1 && length > parsedMin
   })
+  
+  Handlebars.registerHelper('log', (value) => {
+    console.log(value)
+    return value
+  })
 
   Handlebars.registerHelper('viewClasses', (value, breadcrumbs = {}) => {
     const activeBreadcrumb = objectFindValue(breadcrumbs, breadcrumb => breadcrumb.active)

@@ -29,6 +29,12 @@
               actorTypeIndex=actorTypeIndex
               breadcrumbs=../breadcrumbs
             }}
+            {{> "systems/cortexprime/templates/partials/settings/trait-presets.html"
+                actorTypeIndex=actorTypeIndex
+                traitPresets=@root.traitPresets
+                breadcrumbs=../breadcrumbs
+                path=(concat actorTypeIndex '.traitPresets')
+              }}
             {{#each actorType.traitSets as |traitSet traitSetIndex|}}
               {{> "systems/cortexprime/templates/partials/settings/trait-set.html"
                 actorTypeIndex=actorTypeIndex
