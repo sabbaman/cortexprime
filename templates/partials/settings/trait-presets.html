@@ -1,7 +1,7 @@
 <article class="{{viewClasses (concat 'traitPresets-' actorTypeIndex) breadcrumbs}} trait-presets">
   <div class="separator-cpt"></div>
   <ul class="list-style-none px-0 my-0">
-    {{#each (log traitPresets) as |traitPreset traitPresetIndex|}}
+    {{#each traitPresets as |traitPreset traitPresetIndex|}}
       <li class="pa-1 flex flex-ac flex-jsb relative-section">
         <div class="{{ternary (eq (mod traitPresetIndex 2) 0) 'section-background' 'section-background-alternate'}}"></div>
         <div class="flex-col flex-row flex-ac">
@@ -9,13 +9,8 @@
         </div>
         <div class="flex-col flex-row flex-ac">
           <div class="flex-col px-0">
-            <button class="btn btn-icon btn-icon-plain-cpt duplicate-item" data-path="{{concat ../actorTypeIndex '.traitSets'}}" data-id="{{traitSet.id}}" type="button">
-              <i class="fa fa-clone"></i>
-            </button>
-          </div>
-          <div class="flex-col px-0">
-            <button class="view-change btn btn-icon btn-icon-plain-cpt" data-name="{{traitSet.label}}" data-to="traitSet-{{../actorTypeIndex}}-{{traitPresetIndex}}" type="button">
-              <i class="fa fa-edit ma-0"></i>
+            <button class="btn btn-icon btn-icon-plain-cpt add-trait-preset" data-actor-type="{{../actorTypeIndex}}" data-path="{{concat ../actorTypeIndex '.traitSets'}}" data-id="{{traitPresetIndex}}" type="button">
+              <i class="fa fa-plus"></i>
             </button>
           </div>
           <div>

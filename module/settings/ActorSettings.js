@@ -1,7 +1,7 @@
 import { localizer } from '../scripts/foundryHelpers.js'
 import { getLength, objectFindKey, objectFindValue, objectMapValues, objectReduce, objectReindexFilter } from '../../lib/helpers.js'
 import { removeItem, reorderItem } from '../scripts/settingsHelpers.js'
-
+import { traitPresets } from './TraitsPresets.js'
 export default class ActorSettings extends FormApplication {
   constructor() {
     super()
@@ -29,22 +29,7 @@ export default class ActorSettings extends FormApplication {
 
     return {
       actorTypes: game.settings.get('cortexprime', 'actorTypes'),
-      traitPresets: {
-        "0": {
-          label: "Skills",
-          description: "skill trait set description",
-          definition: {
-            
-          }
-        },
-        "1": {
-          label: "Skills 2",
-          description: "skill trait set description",
-          definition: {
-            
-          }
-        },
-      },
+      traitPresets: traitPresets,
       breadcrumbs,
       goBack: breadcrumbs[getLength(breadcrumbs ?? {}) - 2]?.target ?? 0
     }
@@ -70,6 +55,7 @@ export default class ActorSettings extends FormApplication {
     html.find('.add-sub-trait').click(this._addSubTrait.bind(this))
     html.find('.add-trait').click(this._addTrait.bind(this))
     html.find('.add-trait-set').click(this._addTraitSet.bind(this))
+    html.find('.add-trait-preset').click(this._addTraitPreset.bind(this))
     html.find('.breadcrumb-name-change').change(this._breadcrumbNameChange.bind(this))
     html.find('.breadcrumb:not(.active), .go-back').click(this._breadcrumbChange.bind(this))
     html.find('.default-image').click(this._changeDefaultImage.bind(this))
@@ -233,6 +219,28 @@ export default class ActorSettings extends FormApplication {
           [newKey]: {
             id: `_${Date.now()}`,
             label: localizer('NewTraitSet')
+          }
+        }
+      }
+    }
+
+    await game.settings.set('cortexprime', 'actorTypes', mergeObject(source, newTraitSet))
+    await this.changeView(localizer('NewTraitSet'), `traitSet-${actorTypeKey}-${newKey}`)
+    this.render(true)
+  }
+
+  async _addTraitPreset (event) {
+    event.preventDefault()
+    const source = game.settings.get('cortexprime', 'actorTypes')
+    const actorTypeKey = $(event.currentTarget).data('actorType')
+    const newKey = getLength(source[actorTypeKey]?.traitSets || {})
+    const preset = traitPresets[$(event.currentTarget).data('id')]
+    const newTraitSet = {
+      [actorTypeKey]: {
+        traitSets: {
+          [newKey]: {
+            id: `_${Date.now()}`,
+            label: preset.label
           }
         }
       }
