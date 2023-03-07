@@ -240,14 +240,34 @@ export default class ActorSettings extends FormApplication {
         traitSets: {
           [newKey]: {
             id: `_${Date.now()}`,
-            label: preset.label
+            ...preset
           }
         }
       }
     }
 
     await game.settings.set('cortexprime', 'actorTypes', mergeObject(source, newTraitSet))
-    await this.changeView(localizer('NewTraitSet'), `traitSet-${actorTypeKey}-${newKey}`)
+    let name = preset.label
+    let target = `traitSet-${actorTypeKey}-${newKey}`
+    
+    const currentBreadcrumbs = game.settings.get('cortexprime', 'actorBreadcrumbs')
+
+    await game.settings.set('cortexprime', 'actorBreadcrumbs', {
+      ...objectMapValues(currentBreadcrumbs, breadcrumb => {
+        breadcrumb.active = false
+        return breadcrumb
+      }),
+      [getLength(currentBreadcrumbs)]: {
+        active: true,
+        localize: false,
+        name,
+        target
+      }
+    })
+
+    
+    
+    
     this.render(true)
   }
 
